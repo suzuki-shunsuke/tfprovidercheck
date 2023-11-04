@@ -61,7 +61,7 @@ providers:
 ```
 
 - `name` (Required, string): `name` must be equal to the provider name. Regular expression and glob aren't supported
-- `version` (Optional, string): The version constraint of Terraform Provider. `version` is evaluated as [hashicorp/go-version' Version Constraints](https://github.com/hashicorp/go-version#version-constraints)
+- `version` (Optional, string): The version constraint of Terraform Provider. `version` is evaluated as [hashicorp/go-version' Version Constraints](https://github.com/hashicorp/go-version#version-constraints). If `version` is empty, any version is allowed
 
 ## LICENSE
 
