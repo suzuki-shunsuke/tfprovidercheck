@@ -49,7 +49,7 @@ There are several ways to configure tfprovidercheck.
 1. The command line option `-config [-c]`
 1. The environment variable `TFPROVIDERCHECK_CONFIG_BODY`
 1. The environment variable `TFPROVIDERCHECK_CONFIG`
-1. tfprovidercheck looks for a configuration file `tfprovidercheck.yaml` from the current directory to the root directory
+1. tfprovidercheck looks for a configuration file `.tfprovidercheck.yaml` from the current directory to the root directory
 
 The field `providers` lists allowed providers and their versions.
 
