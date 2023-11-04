@@ -56,7 +56,7 @@ brews:
 
     # Template of your app's description.
     # Default is empty.
-    description: Create GitHub Tags via API
+    description: Censor Terraform Providers
     license: MIT
 
     # Setting this will prevent goreleaser to actually try to commit the updated
@@ -74,7 +74,7 @@ brews:
 
 scoops:
   -
-    description: CLI to create GitHub Tags via API
+    description: Censor Terraform Providers
     license: MIT
     skip_upload: auto
     repository:
