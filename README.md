@@ -1,13 +1,26 @@
 # tfprovidercheck
 
 Censor [Terraform Providers](https://developer.hashicorp.com/terraform/language/providers).
-This is a command line tool for security.
-This tool is useful to prevent malicious Terraform Providers from being executed.
+
+```console
+# Only google provider and azurerm provider are allowed
+$ cat .tfprovidercheck.yaml
+providers:
+  - name: registry.terraform.io/hashicorp/google
+    version: ">= 4.0.0"
+  - name: registry.terraform.io/hashicorp/azurerm
+
+# tfprovidercheck fails because aws provider is disallowed
+$ terraform version -json | tfprovidercheck
+FATA[0000] tfprovidercheck failed                        error="this Terraform Provider is disallowed" program=tfprovidercheck provider_name=registry.terraform.io/hashicorp/aws tfprovidercheck_version=0.1.0
+```
+
+tfprovidercheck is a command line tool for security, and prevents malicious Terraform Providers from being executed.
 You can define the allow list of Terraform Providers and their versions, and check if disallowed providers aren't used.
 
 ## Install
 
-tfprovidercheck is a single binary written in Go. So you only need to install an execurable file into `$PATH`.
+tfprovidercheck is a single binary written in [Go](https://go.dev/). So you only need to install an execurable file into `$PATH`.
 
 1. [Homebrew](https://brew.sh/)
 
@@ -58,7 +71,7 @@ e.g.
 ```yaml
 providers:
   - name: registry.terraform.io/hashicorp/aws
-    version: >= 3.0.0
+    version: ">= 3.0.0" # Quotes are necessary because '>' is a special character for YAML
   - name: registry.terraform.io/hashicorp/google
     # version is optional
 ```
