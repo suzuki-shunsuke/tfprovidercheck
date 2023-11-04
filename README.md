@@ -37,8 +37,8 @@ Please run `terraform init` in advance to get Terraform Providers.
 terraform version -json | tfprovidercheck [-c <configuration file path>]
 ```
 
-```console
-$ tfprovidercheck --help
+```sh
+tfprovidercheck --help
 ```
 
 ## Configuration
@@ -60,8 +60,8 @@ providers:
     version: >= 3.0.0
 ```
 
-- `name` must be equal to the provider name. Regular expression and glob aren't supported
-- `version` is evaluated as [hashicorp/go-version' Version Constraints](https://github.com/hashicorp/go-version#version-constraints)
+- `name` (Required, string): `name` must be equal to the provider name. Regular expression and glob aren't supported
+- `version` (Optional, string): The version constraint of Terraform Provider. `version` is evaluated as [hashicorp/go-version' Version Constraints](https://github.com/hashicorp/go-version#version-constraints)
 
 ## LICENSE
 
