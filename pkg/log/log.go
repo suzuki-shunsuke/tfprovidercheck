@@ -7,7 +7,7 @@ import (
 func New(version string) *logrus.Entry {
 	return logrus.WithFields(logrus.Fields{
 		"tfprovidercheck_version": version,
-		"program":         "tfprovidercheck",
+		"program":                 "tfprovidercheck",
 	})
 }
 
