@@ -10,6 +10,7 @@ import (
 	"github.com/suzuki-shunsuke/logrus-error/logerr"
 	"github.com/suzuki-shunsuke/tfprovidercheck/pkg/cli"
 	"github.com/suzuki-shunsuke/tfprovidercheck/pkg/log"
+	"golang.org/x/term"
 )
 
 var (
@@ -40,6 +41,11 @@ func core(logE *logrus.Entry) error {
 			Date:    date,
 		},
 		LogE: logE,
+		Env: &cli.Env{
+			Config:     os.Getenv("TFPROVIDERCHECK_CONFIG"),
+			ConfigBody: os.Getenv("TFPROVIDERCHECK_CONFIG_BODY"),
+		},
+		IsTerminal: term.IsTerminal(0),
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
