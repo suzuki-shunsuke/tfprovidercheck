@@ -3,24 +3,28 @@ package cli
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
-	"os"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
 	"github.com/suzuki-shunsuke/tfprovidercheck/pkg/controller"
 	"github.com/urfave/cli/v2"
-	"golang.org/x/term"
 )
 
 type Runner struct {
-	Stdin   io.Reader
-	Stdout  io.Writer
-	Stderr  io.Writer
-	LDFlags *LDFlags
-	LogE    *logrus.Entry
+	Stdin      io.Reader
+	Stdout     io.Writer
+	Stderr     io.Writer
+	LDFlags    *LDFlags
+	LogE       *logrus.Entry
+	Env        *Env
+	IsTerminal bool
+}
+
+type Env struct {
+	Config     string
+	ConfigBody string
 }
 
 type LDFlags struct {
@@ -81,14 +85,14 @@ func (r *Runner) run(c *cli.Context) error {
 	}
 
 	if param.ConfigFilePath == "" {
-		param.ConfigBody = os.Getenv("TFPROVIDERCHECK_CONFIG_BODY")
+		param.ConfigBody = r.Env.ConfigBody
 		if param.ConfigBody == "" {
-			param.ConfigFilePath = os.Getenv("TFPROVIDERCHECK_CONFIG")
+			param.ConfigFilePath = r.Env.Config
 		}
 	}
 
-	if term.IsTerminal(0) {
-		return errors.New(`stdin is missing. Please pass the result of "terraform version -json" to stdin`)
+	if r.IsTerminal {
+		return ErrNoStdin
 	}
 
 	vout := &controller.TerraformVersionOutput{}
