@@ -37,13 +37,13 @@ scoop bucket add suzuki-shunsuke https://github.com/suzuki-shunsuke/scoop-bucket
 scoop install tfprovidercheck
 ```
 
-1. [aqua](https://aquaproj.github.io/)
+3. [aqua](https://aquaproj.github.io/)
 
 ```sh
 aqua g -i suzuki-shunsuke/tfprovidercheck
 ```
 
-1. Download a prebuilt binary from [GitHub Releases](https://github.com/suzuki-shunsuke/tfprovidercheck/releases) and install it into `$PATH`
+4. Download a prebuilt binary from [GitHub Releases](https://github.com/suzuki-shunsuke/tfprovidercheck/releases) and install it into `$PATH`
 
 ## Usage
 
