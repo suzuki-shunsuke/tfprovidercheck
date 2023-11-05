@@ -73,6 +73,7 @@ Options:
 ## Configuration
 
 There are several ways to configure tfprovidercheck.
+In order of priority, they are as follows.
 
 1. The command line option `-config [-c]`, which is the configuration file path
 1. The environment variable `TFPROVIDERCHECK_CONFIG_BODY`, which is the configuration itself (YAML)
@@ -97,7 +98,7 @@ providers:
 ## :bulb: Prevent configuration from being tampered
 
 It's important to prevent configuration from being tamperd.
-If you run this tool on GitHub Actions, `pull_request_target` event is useful to prevent workflows from being tampered.
+If you run tfprovidercheck on GitHub Actions, `pull_request_target` event is useful to prevent workflows from being tampered.
 
 [Secure GitHub Actions by pull_request_target](https://dev.to/suzukishunsuke/secure-github-actions-by-pullrequesttarget-641)
 
