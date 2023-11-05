@@ -9,10 +9,15 @@ import (
 	"github.com/suzuki-shunsuke/logrus-error/logerr"
 )
 
-func (c *Controller) Run(_ context.Context, _ *logrus.Entry, param *ParamRun, vout *TerraformVersionOutput) error {
+func (c *Controller) Run(_ context.Context, logE *logrus.Entry, param *ParamRun, vout *TerraformVersionOutput) error {
 	cfg := &Config{}
 	if err := c.readConfig(cfg, param); err != nil {
 		return err
+	}
+
+	if len(vout.ProviderSelections) == 0 {
+		logE.Warn(`provider_selections is empty. Maybe the input is wrong. Please run "terraform init" before running "terraform version -json" if you haven't run`)
+		return nil
 	}
 
 	providers := make(map[string]version.Constraints, len(cfg.Providers))
