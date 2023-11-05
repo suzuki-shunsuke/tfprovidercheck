@@ -45,14 +45,27 @@ aqua g -i suzuki-shunsuke/tfprovidercheck
 
 ## Usage
 
-Please run `terraform init` in advance to get Terraform Providers.
+Please run `terraform init` in advance to update the list of Terraform Providers.
 
 ```sh
 terraform version -json | tfprovidercheck [-c <configuration file path>]
 ```
 
-```sh
-tfprovidercheck --help
+To prevent malicious codes from being executed, you should run tfprovidercheck before running other Terraform commands such as `terraform validate`, `terraform plan`, and `terraform apply`.
+
+```console
+$ tfprovidercheck --help
+tfprovidercheck - Censor Terraform Providers
+
+https://github.com/suzuki-shunsuke/tfprovidercheck
+
+Usage:
+  tfprovidercheck [<options>]
+
+Options:
+  -help, -h     Show help
+  -version, -v  Show version
+  -config, -c   Configuration file path
 ```
 
 ## Configuration
