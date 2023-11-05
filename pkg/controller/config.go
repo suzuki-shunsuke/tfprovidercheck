@@ -3,8 +3,6 @@ package controller
 import (
 	"fmt"
 
-	"github.com/spf13/afero"
-	"github.com/suzuki-shunsuke/go-findconfig/findconfig"
 	"gopkg.in/yaml.v3"
 )
 
@@ -19,20 +17,11 @@ func (c *Controller) readConfig(cfg *Config, param *ParamRun) error {
 		}
 		return nil
 	}
-	if param.ConfigFilePath != "" {
-		return c.readConfigFile(cfg, param.ConfigFilePath)
+	if param.ConfigFilePath == "" {
+		// Don't search a configuration file from the current directory to the root directory to prevent being replaced with a fake configuration file
+		param.ConfigFilePath = ".tfprovidercheck.yaml"
 	}
-	cfgFilePath := findconfig.Find(param.PWD, func(p string) bool {
-		f, err := afero.Exists(c.fs, p)
-		if err != nil {
-			return false
-		}
-		return f
-	}, ".tfprovidercheck.yaml")
-	if cfgFilePath == "" {
-		return ErrConfigNotFound
-	}
-	return c.readConfigFile(cfg, cfgFilePath)
+	return c.readConfigFile(cfg, param.ConfigFilePath)
 }
 
 func (c *Controller) readConfigFile(cfg *Config, cfgFilePath string) error {

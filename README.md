@@ -1,5 +1,7 @@
 # tfprovidercheck
 
+[Install](#install) | [Usage](#usage) | [Config](#configuration)
+
 Censor [Terraform Providers](https://developer.hashicorp.com/terraform/language/providers).
 
 ```console
@@ -72,10 +74,10 @@ Options:
 
 There are several ways to configure tfprovidercheck.
 
-1. The command line option `-config [-c]`
-1. The environment variable `TFPROVIDERCHECK_CONFIG_BODY`
-1. The environment variable `TFPROVIDERCHECK_CONFIG`
-1. tfprovidercheck looks for a configuration file `.tfprovidercheck.yaml` from the current directory to the root directory
+1. The command line option `-config [-c]`, which is the configuration file path
+1. The environment variable `TFPROVIDERCHECK_CONFIG_BODY`, which is the configuration itself (YAML)
+1. The environment variable `TFPROVIDERCHECK_CONFIG`, which is the configuration file path
+1. The configuration file `.tfprovidercheck.yaml` on the current directory
 
 The field `providers` lists allowed providers and their versions.
 
@@ -113,6 +115,10 @@ e.g.
 ```
 
 Then you can prevent configuration from being tampered by `pull_request_target` event.
+
+## Versioning Policy
+
+https://github.com/suzuki-shunsuke/versioning-policy
 
 ## LICENSE
 

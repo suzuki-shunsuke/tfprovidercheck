@@ -54,7 +54,7 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 		{
 			name:   "config isn't found",
 			param:  &controller.ParamRun{},
-			errMsg: `configuration file .tfprovidercheck.yaml isn't found`,
+			errMsg: `open a configuration file: `,
 		},
 		{
 			name: "config path",
@@ -103,12 +103,12 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 			errMsg: `open a configuration file: `,
 		},
 		{
-			name: "config search",
+			name: "config file on the current directory",
 			param: &controller.ParamRun{
-				PWD: "/workspace/foo",
+				PWD: "/workspace",
 			},
 			files: map[string]string{
-				"/workspace/.tfprovidercheck.yaml": `providers:
+				".tfprovidercheck.yaml": `providers:
 - name: registry.terraform.io/hashicorp/aws
 `,
 			},
