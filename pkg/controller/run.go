@@ -16,6 +16,14 @@ func (c *Controller) Run(_ context.Context, _ *logrus.Entry, param *ParamRun, vo
 	}
 
 	providers := make(map[string]version.Constraints, len(cfg.Providers))
+	if err := parseConfig(cfg, providers); err != nil {
+		return err
+	}
+
+	return validate(vout, providers)
+}
+
+func parseConfig(cfg *Config, providers map[string]version.Constraints) error {
 	for _, provider := range cfg.Providers {
 		if provider.Name == "" {
 			return ErrProviderNameIsRequired
@@ -33,7 +41,10 @@ func (c *Controller) Run(_ context.Context, _ *logrus.Entry, param *ParamRun, vo
 		}
 		providers[provider.Name] = constraints
 	}
+	return nil
+}
 
+func validate(vout *TerraformVersionOutput, providers map[string]version.Constraints) error {
 	for providerName, providerVersion := range vout.ProviderSelections {
 		constraints, ok := providers[providerName]
 		if !ok {
