@@ -17,7 +17,8 @@ $ terraform version -json | tfprovidercheck
 FATA[0000] tfprovidercheck failed                        error="this Terraform Provider is disallowed" program=tfprovidercheck provider_name=registry.terraform.io/hashicorp/aws tfprovidercheck_version=0.1.0
 ```
 
-tfprovidercheck is a command line tool for security, and prevents malicious Terraform Providers from being executed.
+tfprovidercheck is a command line tool to execute Terraform security.
+It prevents malicious Terraform Providers from being executed.
 You can define the allow list of Terraform Providers and their versions, and check if disallowed providers aren't used.
 
 ## Install
