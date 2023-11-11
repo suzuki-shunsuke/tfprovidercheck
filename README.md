@@ -120,10 +120,10 @@ Then you can prevent configuration from being tampered by `pull_request_target` 
 
 ## Compared with .terraform.lock.hcl and required_providers block
 
-About [.terraform.lock.hcl](https://developer.hashicorp.com/terraform/language/files/dependency-lock), [.terraform.lock.hcl](https://developer.hashicorp.com/terraform/language/files/dependency-lock) doesn't work as the allow list of providers because `terraform init` adds missing providers automatically.
+About [.terraform.lock.hcl](https://developer.hashicorp.com/terraform/language/files/dependency-lock), .terraform.lock.hcl doesn't work as the allow list of providers because `terraform init` adds missing providers automatically.
 This means malicious providers not included in .terraform.lock.hcl can be executed in CI.
 
-About [required_providers block](https://developer.hashicorp.com/terraform/language/providers/requirements#requiring-providers), there are several reasons tfprovidercheck is useful compared with [required_providers block](https://developer.hashicorp.com/terraform/language/providers/requirements#requiring-providers).
+About [required_providers block](https://developer.hashicorp.com/terraform/language/providers/requirements#requiring-providers), there are several reasons tfprovidercheck is useful compared with required_providers block.
 
 First, it's difficult to validate required_providers in child Terraform Modules.
 
