@@ -118,6 +118,31 @@ e.g.
 
 Then you can prevent configuration from being tampered by `pull_request_target` event.
 
+## Compared with .terraform.lock.hcl and required_providers block
+
+About [.terraform.lock.hcl](https://developer.hashicorp.com/terraform/language/files/dependency-lock), [.terraform.lock.hcl](https://developer.hashicorp.com/terraform/language/files/dependency-lock) doesn't work as the allow list of providers because `terraform init` adds missing providers automatically.
+This means malicious providers not included in .terraform.lock.hcl can be executed in CI.
+
+About [required_providers block](https://developer.hashicorp.com/terraform/language/providers/requirements#requiring-providers), there are several reasons tfprovidercheck is useful compared with [required_providers block](https://developer.hashicorp.com/terraform/language/providers/requirements#requiring-providers).
+
+First, required_providers block can be tampered in pull requests CI without code review.
+On the other hand, you can prevent tfprovidercheck configuration from being tampered by several ways such as [GitHub Actions' `pull_request_target`](#bulb-prevent-configuration-from-being-tampered).
+
+Second, tfprovidercheck enables you to manange the allow list of providers with a single YAML outside of Terraform working directory.
+So administrators (SRE, Platform Engineer, DevOps Engineer, etc) can keep the security and governance easily while delegating the management of Terraform configuration to product teams.
+
+If you validate providers with required_providers block, admins need to have the ownership of required_providers block and review changes of them.
+In case of Monorepo, the number of required_providers block is proportion to the number of working directories.
+GitHub CODEOWNERS manages the ownership per file, so admins may be supposed to review pull requests even for unrelated changes.
+For example, if you [update Terraform Providers by Renovate](https://docs.renovatebot.com/modules/manager/terraform/#required_providers-block), admins need to review pull requests every time providers are updated.
+In proportion to the number of working directories in Monorepo, the burden of admins gets higher.
+And this also makes provider auto update difficult.
+
+On the other hand, if you validate providers with tfprovidercheck, admins don't care about required_blocks providers unless tfprovidercheck fails, so the burden of admins gets lower.
+
+Third, the purpose and intention of tfprovidercheck is so simple and clear that it's easy to handle the error of tfprovidercheck and to maintain tfprovidercheck configuraiton.
+tfprovidercheck is a dedicated security tool to manage the allow list of Terraform Providers and prevent disallowed providers from being used.
+
 ## Versioning Policy
 
 https://github.com/suzuki-shunsuke/versioning-policy
