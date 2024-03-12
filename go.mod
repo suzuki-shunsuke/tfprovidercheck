@@ -1,6 +1,6 @@
 module github.com/suzuki-shunsuke/tfprovidercheck
 
-go 1.22.0
+go 1.22.1
 
 require (
 	github.com/hashicorp/go-version v1.6.0
