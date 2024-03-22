@@ -205,7 +205,6 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 		},
 	}
 	for _, d := range data {
-		d := d
 		logE := logrus.NewEntry(logrus.New())
 		t.Run(d.name, func(t *testing.T) {
 			t.Parallel()

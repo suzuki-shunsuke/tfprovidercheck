@@ -50,7 +50,6 @@ func TestLDFlags_VersionString(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.name, func(t *testing.T) {
 			t.Parallel()
 			v := d.ldflags.VersionString()
@@ -118,7 +117,6 @@ func TestRunner_Run(t *testing.T) { //nolint:cyclop,tparallel,funlen
 		},
 	}
 	for _, d := range data { //nolint:paralleltest
-		d := d
 		d.runner.LogE = logrus.NewEntry(logrus.New())
 		t.Run(d.name, func(t *testing.T) {
 			// app.RunContext isn't goroutine safe
