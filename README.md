@@ -1,6 +1,6 @@
 # tfprovidercheck
 
-[Install](Install.md) | [Usage](#usage) | [Config](#configuration)
+[Install](INSTALL.md) | [Usage](#usage) | [Config](#configuration)
 
 Censor [Terraform Providers](https://developer.hashicorp.com/terraform/language/providers).
 
