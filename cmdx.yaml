@@ -46,3 +46,7 @@ tasks:
     usage: Run tfprovidercheck via go run
     script: |
       go run ./cmd/tfprovidercheck {{._builtin.args_string}}
+  - name: js
+    description: Generate JSON Schema
+    usage: Generate JSON Schema
+    script: "go run ./cmd/gen-jsonschema"

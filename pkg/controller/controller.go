@@ -26,6 +26,6 @@ type TerraformVersionOutput struct {
 }
 
 type Provider struct {
-	Name               string
-	VersionConstraints string `yaml:"version"`
+	Name               string `json:"name"`
+	VersionConstraints string `json:"version,omitempty" yaml:"version"`
 }
