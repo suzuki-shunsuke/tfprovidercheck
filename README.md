@@ -154,3 +154,4 @@ https://github.com/suzuki-shunsuke/versioning-policy
 ## LICENSE
 
 [MIT](LICENSE)
+

@@ -5,12 +5,6 @@
   "$defs": {
     "Config": {
       "properties": {
-        "providers": {
-          "items": {
-            "$ref": "#/$defs/Provider"
-          },
-          "type": "array"
-        }
       },
       "additionalProperties": false,
       "type": "object",
