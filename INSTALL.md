@@ -14,6 +14,14 @@ There are some ways to install tfprovidercheck.
 
 You can install tfprovidercheck using [Homebrew](https://brew.sh/).
 
+[Homebrew Core Formula: tfprovidercheck](https://formulae.brew.sh/formula/tfprovidercheck)
+
+```sh
+brew install tfprovidercheck
+```
+
+Or
+
 ```sh
 brew install suzuki-shunsuke/tfprovidercheck/tfprovidercheck
 ```
