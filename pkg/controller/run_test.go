@@ -1,7 +1,6 @@
 package controller_test
 
 import (
-	"context"
 	"errors"
 	"os"
 	"strings"
@@ -213,7 +212,7 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 				t.Fatal(err)
 			}
 			ctrl := controller.New(fs)
-			if err := ctrl.Run(context.Background(), logE, d.param, d.vout); err != nil { //nolint:nestif
+			if err := ctrl.Run(t.Context(), logE, d.param, d.vout); err != nil { //nolint:nestif
 				if !d.isErr && d.err == nil && d.errMsg == "" {
 					t.Fatal(err)
 				}

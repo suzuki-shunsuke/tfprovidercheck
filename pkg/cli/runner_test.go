@@ -1,7 +1,6 @@
 package cli_test
 
 import (
-	"context"
 	"errors"
 	"strings"
 	"testing"
@@ -121,7 +120,7 @@ func TestRunner_Run(t *testing.T) { //nolint:cyclop,tparallel,funlen
 		t.Run(d.name, func(t *testing.T) {
 			// app.RunContext isn't goroutine safe
 			// t.Parallel()
-			if err := d.runner.Run(context.Background(), d.args...); err != nil { //nolint:nestif
+			if err := d.runner.Run(t.Context(), d.args...); err != nil { //nolint:nestif
 				if !d.isErr && d.err == nil && d.errMsg == "" {
 					t.Fatal(err)
 				}
