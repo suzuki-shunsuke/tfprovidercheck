@@ -5,7 +5,7 @@ archives:
   - name_template: "{{.ProjectName}}_{{.Os}}_{{.Arch}}"
     format_overrides:
       - goos: windows
-        format: zip
+        formats: [zip]
 builds:
   - binary: tfprovidercheck
     main: cmd/tfprovidercheck/main.go
