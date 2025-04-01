@@ -50,10 +50,10 @@ func (l *LDFlags) VersionString() string {
 }
 
 func (r *Runner) Run(ctx context.Context, args ...string) error {
-	app := &cli.App{
+	app := &cli.Command{
 		Name:  "tfprovidercheck",
 		Usage: "Censor Terraform Providers",
-		CustomAppHelpTemplate: `tfprovidercheck - Censor Terraform Providers
+		CustomRootCommandHelpTemplate: `tfprovidercheck - Censor Terraform Providers
 
 https://github.com/suzuki-shunsuke/tfprovidercheck
 
@@ -76,10 +76,10 @@ Options:
 		Action: r.run,
 	}
 
-	return app.RunContext(ctx, args) //nolint:wrapcheck
+	return app.Run(ctx, args) //nolint:wrapcheck
 }
 
-func (r *Runner) run(c *cli.Context) error {
+func (r *Runner) run(ctx context.Context, c *cli.Command) error {
 	param := &controller.ParamRun{
 		ConfigFilePath: c.String("config"),
 	}
@@ -101,5 +101,5 @@ func (r *Runner) run(c *cli.Context) error {
 	}
 
 	ctrl := controller.New(afero.NewOsFs())
-	return ctrl.Run(c.Context, r.LogE, param, vout) //nolint:wrapcheck
+	return ctrl.Run(ctx, r.LogE, param, vout) //nolint:wrapcheck
 }
