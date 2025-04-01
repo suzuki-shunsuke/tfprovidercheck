@@ -118,7 +118,7 @@ func TestRunner_Run(t *testing.T) { //nolint:cyclop,tparallel,funlen
 	for _, d := range data { //nolint:paralleltest
 		d.runner.LogE = logrus.NewEntry(logrus.New())
 		t.Run(d.name, func(t *testing.T) {
-			// app.RunContext isn't goroutine safe
+			// app.Run isn't goroutine safe
 			// t.Parallel()
 			if err := d.runner.Run(t.Context(), d.args...); err != nil { //nolint:nestif
 				if !d.isErr && d.err == nil && d.errMsg == "" {
