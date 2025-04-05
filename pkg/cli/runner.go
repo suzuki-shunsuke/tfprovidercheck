@@ -50,7 +50,7 @@ func (l *LDFlags) VersionString() string {
 }
 
 func (r *Runner) Run(ctx context.Context, args ...string) error {
-	app := &cli.Command{
+	cmd := &cli.Command{
 		Name:  "tfprovidercheck",
 		Usage: "Censor Terraform Providers",
 		CustomRootCommandHelpTemplate: `tfprovidercheck - Censor Terraform Providers
@@ -76,7 +76,7 @@ Options:
 		Action: r.run,
 	}
 
-	return app.Run(ctx, args) //nolint:wrapcheck
+	return cmd.Run(ctx, args) //nolint:wrapcheck
 }
 
 func (r *Runner) run(ctx context.Context, c *cli.Command) error {
