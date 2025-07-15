@@ -6,6 +6,10 @@ archives:
     format_overrides:
       - goos: windows
         formats: [zip]
+    files:
+      - LICENSE
+      - README.md
+      - third_party_licenses/**/*
 builds:
   - binary: tfprovidercheck
     main: cmd/tfprovidercheck/main.go
