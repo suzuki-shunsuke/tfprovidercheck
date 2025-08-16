@@ -78,7 +78,7 @@ If you run tfprovidercheck on GitHub Actions, `pull_request_target` event is use
 
 [Secure GitHub Actions by pull_request_target](https://dev.to/suzukishunsuke/secure-github-actions-by-pullrequesttarget-641)
 
-tfprovidercheck supports configuring with the environment variable `TFPROVIDERCHECK_CONFIG_BODY`, so you can define the configuraiton in a workflow file.
+tfprovidercheck supports configuring with the environment variable `TFPROVIDERCHECK_CONFIG_BODY`, so you can define the configuration in a workflow file.
 
 e.g.
 
@@ -132,7 +132,7 @@ First, it's difficult to validate required_providers in child Terraform Modules.
 Second, required_providers block can be tampered in pull requests CI without code review.
 On the other hand, you can prevent tfprovidercheck configuration from being tampered by several ways such as [GitHub Actions' `pull_request_target`](#bulb-prevent-configuration-from-being-tampered).
 
-Third, tfprovidercheck enables you to manange the allow list of providers with a single YAML outside of Terraform working directory.
+Third, tfprovidercheck enables you to manage the allow list of providers with a single YAML outside of Terraform working directory.
 So administrators (SRE, Platform Engineer, DevOps Engineer, etc) can keep the security and governance easily while delegating the management of Terraform configuration to product teams.
 
 If you validate providers with required_providers block, admins need to have the ownership of required_providers block and review changes of them.
@@ -144,7 +144,7 @@ And this also makes provider auto update difficult.
 
 On the other hand, if you validate providers with tfprovidercheck, admins don't care about required_blocks providers unless tfprovidercheck fails, so the burden of admins gets lower.
 
-Fourth, the purpose and intention of tfprovidercheck is so simple and clear that it's easy to handle the error of tfprovidercheck and to maintain tfprovidercheck configuraiton.
+Fourth, the purpose and intention of tfprovidercheck is so simple and clear that it's easy to handle the error of tfprovidercheck and to maintain tfprovidercheck configuration.
 tfprovidercheck is a dedicated security tool to manage the allow list of Terraform Providers and prevent disallowed providers from being used.
 
 ## Versioning Policy
