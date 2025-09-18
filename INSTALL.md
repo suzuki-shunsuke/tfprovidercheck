@@ -23,7 +23,7 @@ brew install tfprovidercheck
 Or
 
 ```sh
-brew install suzuki-shunsuke/tfprovidercheck/tfprovidercheck
+brew install --cask suzuki-shunsuke/tfprovidercheck/tfprovidercheck
 ```
 
 ## Scoop
