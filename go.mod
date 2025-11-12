@@ -9,7 +9,7 @@ require (
 	github.com/spf13/afero v1.15.0
 	github.com/suzuki-shunsuke/gen-go-jsonschema v0.1.0
 	github.com/suzuki-shunsuke/logrus-error v0.1.4
-	github.com/urfave/cli/v3 v3.5.0
+	github.com/urfave/cli/v3 v3.6.0
 	golang.org/x/term v0.36.0
 	gopkg.in/yaml.v3 v3.0.1
 )
