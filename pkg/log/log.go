@@ -1,42 +1,26 @@
 package log
 
 import (
-	"github.com/sirupsen/logrus"
+	"log/slog"
+	"os"
+
+	"github.com/suzuki-shunsuke/slog-util/slogutil"
 )
 
-func New(version string) *logrus.Entry {
-	return logrus.WithFields(logrus.Fields{
-		"tfprovidercheck_version": version,
-		"program":                 "tfprovidercheck",
+func New(version string) (*slog.Logger, *slog.LevelVar) {
+	logLevelVar := &slog.LevelVar{}
+	logger := slogutil.New(&slogutil.InputNew{
+		Name:    "tfprovidercheck",
+		Version: version,
+		Out:     os.Stderr,
+		Level:   logLevelVar,
 	})
+	return logger, logLevelVar
 }
 
-func SetLevel(level string, logE *logrus.Entry) {
+func SetLevel(logLevelVar *slog.LevelVar, level string) error {
 	if level == "" {
-		return
+		return nil
 	}
-	lvl, err := logrus.ParseLevel(level)
-	if err != nil {
-		logE.WithField("log_level", level).WithError(err).Error("the log level is invalid")
-		return
-	}
-	logrus.SetLevel(lvl)
-}
-
-func SetColor(color string, logE *logrus.Entry) {
-	switch color {
-	case "", "auto":
-		return
-	case "always":
-		logrus.SetFormatter(&logrus.TextFormatter{
-			ForceColors: true,
-		})
-	case "never":
-		logrus.SetFormatter(&logrus.TextFormatter{
-			DisableColors: true,
-		})
-	default:
-		logE.WithField("log_color", color).Error("log_color is invalid")
-		return
-	}
+	return slogutil.SetLevel(logLevelVar, level) //nolint:wrapcheck
 }

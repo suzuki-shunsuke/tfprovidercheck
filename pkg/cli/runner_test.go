@@ -2,10 +2,10 @@ package cli_test
 
 import (
 	"errors"
+	"log/slog"
 	"strings"
 	"testing"
 
-	"github.com/sirupsen/logrus"
 	"github.com/suzuki-shunsuke/tfprovidercheck/pkg/cli"
 )
 
@@ -115,8 +115,9 @@ func TestRunner_Run(t *testing.T) { //nolint:cyclop,tparallel,funlen
 			},
 		},
 	}
+	logger := slog.New(slog.DiscardHandler)
 	for _, d := range data { //nolint:paralleltest
-		d.runner.LogE = logrus.NewEntry(logrus.New())
+		d.runner.Logger = logger
 		t.Run(d.name, func(t *testing.T) {
 			// app.Run isn't goroutine safe
 			// t.Parallel()

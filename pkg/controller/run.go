@@ -3,13 +3,13 @@ package controller
 import (
 	"context"
 	"fmt"
+	"log/slog"
 
 	"github.com/hashicorp/go-version"
-	"github.com/sirupsen/logrus"
-	"github.com/suzuki-shunsuke/logrus-error/logerr"
+	"github.com/suzuki-shunsuke/slog-error/slogerr"
 )
 
-func (c *Controller) Run(_ context.Context, _ *logrus.Entry, param *ParamRun, vout *TerraformVersionOutput) error {
+func (c *Controller) Run(_ context.Context, _ *slog.Logger, param *ParamRun, vout *TerraformVersionOutput) error {
 	cfg := &Config{}
 	if err := c.readConfig(cfg, param); err != nil {
 		return err
@@ -34,10 +34,10 @@ func parseConfig(cfg *Config, providers map[string]version.Constraints) error {
 		}
 		constraints, err := version.NewConstraint(provider.VersionConstraints)
 		if err != nil {
-			return fmt.Errorf("parse version constraints: %w", logerr.WithFields(err, logrus.Fields{
-				"provider_name":                provider.Name,
-				"provider_version_constraints": provider.VersionConstraints,
-			}))
+			return fmt.Errorf("parse version constraints: %w", slogerr.With(err,
+				"provider_name", provider.Name,
+				"provider_version_constraints", provider.VersionConstraints,
+			))
 		}
 		providers[provider.Name] = constraints
 	}
@@ -48,23 +48,21 @@ func validate(vout *TerraformVersionOutput, providers map[string]version.Constra
 	for providerName, providerVersion := range vout.ProviderSelections {
 		constraints, ok := providers[providerName]
 		if !ok {
-			return logerr.WithFields(ErrDisallowedProvider, logrus.Fields{ //nolint:wrapcheck
-				"provider_name": providerName,
-			})
+			return slogerr.With(ErrDisallowedProvider, "provider_name", providerName) //nolint:wrapcheck
 		}
 		v, err := version.NewVersion(providerVersion)
 		if err != nil {
-			return fmt.Errorf("parse the provider version as semver: %w", logerr.WithFields(err, logrus.Fields{
-				"provider_name":    providerName,
-				"provider_version": providerVersion,
-			}))
+			return fmt.Errorf("parse the provider version as semver: %w", slogerr.With(err,
+				"provider_name", providerName,
+				"provider_version", providerVersion,
+			))
 		}
 		if !constraints.Check(v) {
-			return logerr.WithFields(ErrDisallowedProviderVersion, logrus.Fields{ //nolint:wrapcheck
-				"provider_name":                providerName,
-				"provider_version":             providerVersion,
-				"provider_version_constraints": constraints.String(),
-			})
+			return slogerr.With(ErrDisallowedProviderVersion, //nolint:wrapcheck
+				"provider_name", providerName,
+				"provider_version", providerVersion,
+				"provider_version_constraints", constraints.String(),
+			)
 		}
 	}
 	return nil
