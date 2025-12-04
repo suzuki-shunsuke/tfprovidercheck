@@ -2,7 +2,6 @@ package cli_test
 
 import (
 	"errors"
-	"io"
 	"log/slog"
 	"strings"
 	"testing"
@@ -116,7 +115,7 @@ func TestRunner_Run(t *testing.T) { //nolint:cyclop,tparallel,funlen
 			},
 		},
 	}
-	logger := slog.New(slog.NewTextHandler(io.Discard, nil))
+	logger := slog.New(slog.DiscardHandler)
 	for _, d := range data { //nolint:paralleltest
 		d.runner.Logger = logger
 		t.Run(d.name, func(t *testing.T) {

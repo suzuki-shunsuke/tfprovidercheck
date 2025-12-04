@@ -2,7 +2,6 @@ package controller_test
 
 import (
 	"errors"
-	"io"
 	"log/slog"
 	"os"
 	"strings"
@@ -204,7 +203,7 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 			errMsg: `parse the provider version as semver: `,
 		},
 	}
-	logger := slog.New(slog.NewTextHandler(io.Discard, nil))
+	logger := slog.New(slog.DiscardHandler)
 	for _, d := range data {
 		t.Run(d.name, func(t *testing.T) {
 			t.Parallel()
