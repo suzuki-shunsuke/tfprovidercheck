@@ -64,7 +64,7 @@ Usage:
 Options:
   -help, -h     Show help
   -version, -v  Show version
-	-config, -c   Configuration file path
+  -config, -c   Configuration file path
 `,
 		Version: r.LDFlags.VersionString(),
 		Flags: []cli.Flag{
