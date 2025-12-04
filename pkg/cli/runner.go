@@ -5,21 +5,22 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
 	"github.com/suzuki-shunsuke/tfprovidercheck/pkg/controller"
 	"github.com/urfave/cli/v3"
 )
 
 type Runner struct {
-	Stdin      io.Reader
-	Stdout     io.Writer
-	Stderr     io.Writer
-	LDFlags    *LDFlags
-	LogE       *logrus.Entry
-	Env        *Env
-	IsTerminal bool
+	Stdin       io.Reader
+	Stdout      io.Writer
+	Stderr      io.Writer
+	LDFlags     *LDFlags
+	Logger      *slog.Logger
+	LogLevelVar *slog.LevelVar
+	Env         *Env
+	IsTerminal  bool
 }
 
 type Env struct {
@@ -101,5 +102,5 @@ func (r *Runner) run(ctx context.Context, c *cli.Command) error {
 	}
 
 	ctrl := controller.New(afero.NewOsFs())
-	return ctrl.Run(ctx, r.LogE, param, vout) //nolint:wrapcheck
+	return ctrl.Run(ctx, r.Logger, param, vout) //nolint:wrapcheck
 }

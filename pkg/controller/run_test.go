@@ -2,11 +2,12 @@ package controller_test
 
 import (
 	"errors"
+	"io"
+	"log/slog"
 	"os"
 	"strings"
 	"testing"
 
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
 	"github.com/suzuki-shunsuke/tfprovidercheck/pkg/controller"
 )
@@ -203,8 +204,8 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 			errMsg: `parse the provider version as semver: `,
 		},
 	}
+	logger := slog.New(slog.NewTextHandler(io.Discard, nil))
 	for _, d := range data {
-		logE := logrus.NewEntry(logrus.New())
 		t.Run(d.name, func(t *testing.T) {
 			t.Parallel()
 			fs, err := newFs(d.files, d.dirs...)
@@ -212,7 +213,7 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 				t.Fatal(err)
 			}
 			ctrl := controller.New(fs)
-			if err := ctrl.Run(t.Context(), logE, d.param, d.vout); err != nil { //nolint:nestif
+			if err := ctrl.Run(t.Context(), logger, d.param, d.vout); err != nil { //nolint:nestif
 				if !d.isErr && d.err == nil && d.errMsg == "" {
 					t.Fatal(err)
 				}
