@@ -9,7 +9,7 @@ require (
 	github.com/suzuki-shunsuke/slog-error v0.2.1
 	github.com/suzuki-shunsuke/slog-util v0.2.2
 	github.com/urfave/cli/v3 v3.6.1
-	golang.org/x/term v0.37.0
+	golang.org/x/term v0.38.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -22,7 +22,7 @@ require (
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
-	golang.org/x/sys v0.38.0 // indirect
+	golang.org/x/sys v0.39.0 // indirect
 	golang.org/x/text v0.28.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
