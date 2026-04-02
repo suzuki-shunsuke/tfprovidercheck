@@ -3,7 +3,7 @@ module github.com/suzuki-shunsuke/tfprovidercheck
 go 1.25.7
 
 require (
-	github.com/hashicorp/go-version v1.8.0
+	github.com/hashicorp/go-version v1.9.0
 	github.com/spf13/afero v1.15.0
 	github.com/suzuki-shunsuke/gen-go-jsonschema v0.1.0
 	github.com/suzuki-shunsuke/slog-error v0.2.2
