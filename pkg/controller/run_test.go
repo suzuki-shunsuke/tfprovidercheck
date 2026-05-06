@@ -14,6 +14,14 @@ import (
 const (
 	dirPermission  os.FileMode = 0o775
 	filePermission os.FileMode = 0o644
+
+	workspacePath     = "/workspace"
+	workspaceFooYAML  = workspacePath + "/foo.yaml"
+	awsProvider       = "registry.terraform.io/hashicorp/aws"
+	awsVersion        = "3.0.0"
+	awsProviderConfig = `providers:
+- name: registry.terraform.io/hashicorp/aws
+`
 )
 
 func newFs(files map[string]string, dirs ...string) (afero.Fs, error) {
@@ -58,32 +66,30 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 		{
 			name: "config path",
 			param: &controller.ParamRun{
-				ConfigFilePath: "/workspace/foo.yaml",
-				PWD:            "/workspace",
+				ConfigFilePath: workspaceFooYAML,
+				PWD:            workspacePath,
 			},
 			files: map[string]string{
-				"/workspace/foo.yaml": `providers:
-- name: registry.terraform.io/hashicorp/aws
-`,
+				workspaceFooYAML: awsProviderConfig,
 			},
 			vout: &controller.TerraformVersionOutput{
 				ProviderSelections: map[string]string{
-					"registry.terraform.io/hashicorp/aws": "3.0.0",
+					awsProvider: awsVersion,
 				},
 			},
 		},
 		{
 			name: "invalid config file",
 			param: &controller.ParamRun{
-				ConfigFilePath: "/workspace/foo.yaml",
-				PWD:            "/workspace",
+				ConfigFilePath: workspaceFooYAML,
+				PWD:            workspacePath,
 			},
 			files: map[string]string{
-				"/workspace/foo.yaml": `{`,
+				workspaceFooYAML: `{`,
 			},
 			vout: &controller.TerraformVersionOutput{
 				ProviderSelections: map[string]string{
-					"registry.terraform.io/hashicorp/aws": "3.0.0",
+					awsProvider: awsVersion,
 				},
 			},
 			errMsg: `read a configuration file as YAML: `,
@@ -91,12 +97,12 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 		{
 			name: "invalid config file path",
 			param: &controller.ParamRun{
-				ConfigFilePath: "/workspace/foo.yaml",
-				PWD:            "/workspace",
+				ConfigFilePath: workspaceFooYAML,
+				PWD:            workspacePath,
 			},
 			vout: &controller.TerraformVersionOutput{
 				ProviderSelections: map[string]string{
-					"registry.terraform.io/hashicorp/aws": "3.0.0",
+					awsProvider: awsVersion,
 				},
 			},
 			errMsg: `open a configuration file: `,
@@ -104,29 +110,25 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 		{
 			name: "config file on the current directory",
 			param: &controller.ParamRun{
-				PWD: "/workspace",
+				PWD: workspacePath,
 			},
 			files: map[string]string{
-				".tfprovidercheck.yaml": `providers:
-- name: registry.terraform.io/hashicorp/aws
-`,
+				".tfprovidercheck.yaml": awsProviderConfig,
 			},
 			vout: &controller.TerraformVersionOutput{
 				ProviderSelections: map[string]string{
-					"registry.terraform.io/hashicorp/aws": "3.0.0",
+					awsProvider: awsVersion,
 				},
 			},
 		},
 		{
 			name: "config body",
 			param: &controller.ParamRun{
-				ConfigBody: `providers:
-- name: registry.terraform.io/hashicorp/aws
-`,
+				ConfigBody: awsProviderConfig,
 			},
 			vout: &controller.TerraformVersionOutput{
 				ProviderSelections: map[string]string{
-					"registry.terraform.io/hashicorp/aws": "3.0.0",
+					awsProvider: awsVersion,
 				},
 			},
 		},
@@ -139,7 +141,7 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 			},
 			vout: &controller.TerraformVersionOutput{
 				ProviderSelections: map[string]string{
-					"registry.terraform.io/hashicorp/aws": "3.0.0",
+					awsProvider: awsVersion,
 				},
 			},
 			err: controller.ErrProviderNameIsRequired,
@@ -154,7 +156,7 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 			},
 			vout: &controller.TerraformVersionOutput{
 				ProviderSelections: map[string]string{
-					"registry.terraform.io/hashicorp/aws": "3.0.0",
+					awsProvider: awsVersion,
 				},
 			},
 			errMsg: "parse version constraints",
@@ -168,7 +170,7 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 			},
 			vout: &controller.TerraformVersionOutput{
 				ProviderSelections: map[string]string{
-					"registry.terraform.io/hashicorp/aws": "3.0.0",
+					awsProvider: awsVersion,
 				},
 			},
 			err: controller.ErrDisallowedProvider,
@@ -183,7 +185,7 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 			},
 			vout: &controller.TerraformVersionOutput{
 				ProviderSelections: map[string]string{
-					"registry.terraform.io/hashicorp/aws": "3.0.0",
+					awsProvider: awsVersion,
 				},
 			},
 			err: controller.ErrDisallowedProviderVersion,
@@ -191,13 +193,11 @@ func TestController_Run(t *testing.T) { //nolint:gocognit,cyclop,funlen
 		{
 			name: "invalid version",
 			param: &controller.ParamRun{
-				ConfigBody: `providers:
-- name: registry.terraform.io/hashicorp/aws
-`,
+				ConfigBody: awsProviderConfig,
 			},
 			vout: &controller.TerraformVersionOutput{
 				ProviderSelections: map[string]string{
-					"registry.terraform.io/hashicorp/aws": "...",
+					awsProvider: "...",
 				},
 			},
 			errMsg: `parse the provider version as semver: `,
