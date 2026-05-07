@@ -9,6 +9,11 @@ import (
 	"github.com/suzuki-shunsuke/tfprovidercheck/pkg/cli"
 )
 
+const (
+	cliVersion = "1.0.0"
+	cliBin     = "tfprovidercheck"
+)
+
 func TestLDFlags_VersionString(t *testing.T) {
 	t.Parallel()
 	data := []struct {
@@ -34,16 +39,16 @@ func TestLDFlags_VersionString(t *testing.T) {
 		},
 		{
 			name: "date is empty",
-			exp:  "1.0.0",
+			exp:  cliVersion,
 			ldflags: &cli.LDFlags{
-				Version: "1.0.0",
+				Version: cliVersion,
 			},
 		},
 		{
 			name: "normal",
-			exp:  "1.0.0 (2023-11-04T15:39:47Z)",
+			exp:  cliVersion + " (2023-11-04T15:39:47Z)",
 			ldflags: &cli.LDFlags{
-				Version: "1.0.0",
+				Version: cliVersion,
 				Date:    "2023-11-04T15:39:47Z",
 			},
 		},
@@ -73,7 +78,7 @@ func TestRunner_Run(t *testing.T) { //nolint:cyclop,tparallel,funlen
 			name: "no stdin",
 			err:  cli.ErrNoStdin,
 			args: []string{
-				"tfprovidercheck",
+				cliBin,
 			},
 			runner: &cli.Runner{
 				Env:        &cli.Env{},
@@ -84,7 +89,7 @@ func TestRunner_Run(t *testing.T) { //nolint:cyclop,tparallel,funlen
 			name:   "invalid stdin",
 			errMsg: `parse stdin as the output of "terraform version -json`,
 			args: []string{
-				"tfprovidercheck",
+				cliBin,
 			},
 			runner: &cli.Runner{
 				Env:        &cli.Env{},
@@ -95,7 +100,7 @@ func TestRunner_Run(t *testing.T) { //nolint:cyclop,tparallel,funlen
 		{
 			name: "normal",
 			args: []string{
-				"tfprovidercheck",
+				cliBin,
 			},
 			runner: &cli.Runner{
 				Env: &cli.Env{
