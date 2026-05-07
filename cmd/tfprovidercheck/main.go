@@ -29,7 +29,7 @@ func main() {
 }
 
 func core() int {
-	logger, logLevelVar := log.New(version)
+	logger := log.New(version)
 	runner := cli.Runner{
 		Stdin:  os.Stdin,
 		Stdout: os.Stdout,
@@ -39,8 +39,7 @@ func core() int {
 			Commit:  commit,
 			Date:    date,
 		},
-		Logger:      logger,
-		LogLevelVar: logLevelVar,
+		Logger: logger,
 		Env: &cli.Env{
 			Config:     os.Getenv("TFPROVIDERCHECK_CONFIG"),
 			ConfigBody: os.Getenv("TFPROVIDERCHECK_CONFIG_BODY"),

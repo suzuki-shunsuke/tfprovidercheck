@@ -13,14 +13,13 @@ import (
 )
 
 type Runner struct {
-	Stdin       io.Reader
-	Stdout      io.Writer
-	Stderr      io.Writer
-	LDFlags     *LDFlags
-	Logger      *slog.Logger
-	LogLevelVar *slog.LevelVar
-	Env         *Env
-	IsTerminal  bool
+	Stdin      io.Reader
+	Stdout     io.Writer
+	Stderr     io.Writer
+	LDFlags    *LDFlags
+	Logger     *slog.Logger
+	Env        *Env
+	IsTerminal bool
 }
 
 type Env struct {
