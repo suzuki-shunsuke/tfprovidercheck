@@ -9,6 +9,7 @@ linters:
     - exhaustruct_v5
     - godot
     - godox
+    - gomodguard
     - ireturn
     - lll
     - musttag
